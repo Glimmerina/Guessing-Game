@@ -11,6 +11,7 @@ fn main() {
 
     loop{ 
         if guesses > 0 {
+            //If the user has lives left, prompt them to input a guess
             println!("Please input your guess.");
             let mut guess= String::new(); //mutable variable
 
@@ -43,6 +44,7 @@ fn main() {
             }
     }
         else {
+            //If the user has no lives left, end the game.
             println!("You have run out of guesses! The redcaps have come for you!");
             break;
     }
