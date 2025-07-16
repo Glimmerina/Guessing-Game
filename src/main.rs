@@ -7,30 +7,44 @@ fn main() {
 
     let pixies = rand::thread_rng().gen_range(1..=100);//immutable variable
 
+    let mut guesses  = 5;
+
     loop{ 
-        println!("Please input your guess.");
+        if guesses > 0 {
+            println!("Please input your guess.");
+            let mut guess= String::new(); //mutable variable
 
-        let mut guess= String::new(); //mutable variable
+            io::stdin()
+                .read_line(&mut guess)
+                .expect("Failed to read line");
 
+                let guess: u32 = match guess.trim().parse() {
+                    Ok(num) => num,
+                    Err(_) => continue,
+                };
 
-        io::stdin()
-            .read_line(&mut guess)
-            .expect("Failed to read line");
+            println!("You guessed: {guess}");
 
-            let guess: u32 = match guess.trim().parse() {
-                Ok(num) => num,
-                Err(_) => continue,
-            };
-
-        println!("You guessed: {guess}");
-
-        match guess.cmp(&pixies){
-            Ordering::Less => println!("Not enough pixies!"),
-            Ordering::Greater => println!("Too many pixies!"),
-            Ordering::Equal => {
-                println!("You win! Keep on sparkling, darling!");
-                break;
+            match guess.cmp(&pixies){
+                Ordering::Less => {
+                    println!("Not enough pixies!");
+                    guesses = guesses -1;
+                    println!("You have {} guesses left.", guesses);
+                }
+                Ordering::Greater => {
+                    println!("Too many pixies!");
+                    guesses = guesses -1;
+                    println!("You have {} guesses left.", guesses);
+                }
+                Ordering::Equal => {
+                    println!("You win! Keep on sparkling, darling!");
+                    break;
+                }
             }
-        }
+    }
+        else {
+            println!("You have run out of guesses! The redcaps have come for you!");
+            break;
+    }
     }
 }
