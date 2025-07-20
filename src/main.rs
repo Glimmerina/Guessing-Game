@@ -12,7 +12,7 @@ fn playGame() {
     let pixies = rand::thread_rng().gen_range(1..=100);//immutable variable
 
     let mut guesses  = 5;
-
+    let mut replay= String::new(); //Variable to help parse replay input
     loop{ 
         if guesses > 0 {
             //If the user has lives left, prompt them to input a guess
@@ -42,15 +42,41 @@ fn playGame() {
                     println!("You have {} guesses left.", guesses);
                 }
                 Ordering::Equal => {
-                    println!("You win! Keep on sparkling, darling!");
-                    main(); //Restart the game by calling main again
+                    println!("You win! Keep on sparkling, darling! Would you like to play again?");
+                    io::stdin()
+                    .read_line(&mut replay)
+                    .expect("Failed to read line");
+
+                    let replay = replay.trim().to_lowercase();
+
+                    if replay == "yes" || replay == "y" {
+                        main(); //Restart the game by calling playGame again
+                    } else {
+                        println!("Thank you for playing! Goodbye!");
+                        stopPlaying();
+                    }
                 }
             }
     }
         else {
             //If the user has no lives left, end the game.
-            println!("You have run out of guesses! The redcaps have come for you!");
-            main(); //Restart the game by calling main again
+            println!("You have run out of guesses! The redcaps have come for you! Would you like to play again?");
+            io::stdin()
+            .read_line(&mut replay)
+            .expect("Failed to read line");
+
+            let replay = replay.trim().to_lowercase();
+
+            if replay == "yes" || replay == "y" {
+                main(); //Restart the game by calling main again
+            } else {
+                println!("Thank you for playing! Goodbye!");                    
+                stopPlaying();
+            }
+        }
     }
-    }
+}
+
+fn stopPlaying() {
+    std::process::exit(0); //Exit the program gracefully
 }
