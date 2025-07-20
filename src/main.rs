@@ -3,6 +3,10 @@ use std::io;
 use rand::Rng;
 
 fn main() {
+    playGame()
+    //Begins the game by calling the function playGame.
+}
+fn playGame() {
     println!("Guess the number of pixies!");
 
     let pixies = rand::thread_rng().gen_range(1..=100);//immutable variable
@@ -39,14 +43,14 @@ fn main() {
                 }
                 Ordering::Equal => {
                     println!("You win! Keep on sparkling, darling!");
-                    break;
+                    main(); //Restart the game by calling main again
                 }
             }
     }
         else {
             //If the user has no lives left, end the game.
             println!("You have run out of guesses! The redcaps have come for you!");
-            break;
+            main(); //Restart the game by calling main again
     }
     }
 }
