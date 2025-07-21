@@ -3,10 +3,10 @@ use std::io;
 use rand::Rng;
 
 fn main() {
-    playGame()
+    play_game()
     //Begins the game by calling the function playGame.
 }
-fn playGame() {
+fn play_game() {
     println!("Guess the number of pixies!");
 
     let pixies = rand::thread_rng().gen_range(1..=100);//immutable variable
@@ -29,7 +29,7 @@ fn playGame() {
                 };
 
             println!("You guessed: {guess}");
-
+            //Uses match guess.cmp to determine if guess is greater/less/equal to pixies
             match guess.cmp(&pixies){
                 Ordering::Less => {
                     println!("Not enough pixies!");
